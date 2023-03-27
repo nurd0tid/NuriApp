@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nuri_app/utils/dimensions.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -15,7 +14,7 @@ class _DashboardPageState extends State<DashboardPage> {
   double _height = Dimensions.pageViewContainer;
   String hariIni = DateFormat.yMMMMd('id').format(DateTime.now());
   String waktuHariIni = DateFormat("HH:mm").format(DateTime.now());
-
+  String timerReal = DateFormat('HH:mm:ss').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +56,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ],
                   ),
                 ),
+                // Baca Al Quran
                 Stack(
                   children: [
                     SizedBox(
@@ -156,6 +156,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                   ),
                 ),
+                // Jadwal Hari Ini
                 Stack(
                   children: [
                     SizedBox(
@@ -216,73 +217,82 @@ class _DashboardPageState extends State<DashboardPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "Adzan Magrib",
-                                style: GoogleFonts.getFont(
-                                  "Poppins",
-                                  fontSize: Dimensions.font14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF035A2F),
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Adzan Magrib",
+                                    style: GoogleFonts.getFont(
+                                      "Poppins",
+                                      fontSize: Dimensions.font14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF035A2F),
+                                    ),
+                                  ),
+                                  Text(
+                                    "17:45",
+                                    style: GoogleFonts.getFont(
+                                      "Poppins",
+                                      fontSize: Dimensions.font20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFFEDC855),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                "Saat ini Waktu",
-                                style: GoogleFonts.getFont(
-                                  "Poppins",
-                                  fontSize: Dimensions.font14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF035A2F),
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Saat ini Waktu",
+                                    style: GoogleFonts.getFont(
+                                      "Poppins",
+                                      fontSize: Dimensions.font14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF035A2F),
+                                    ),
+                                  ),
+                                  Text(
+                                    "Ashar",
+                                    style: GoogleFonts.getFont(
+                                      "Poppins",
+                                      fontSize: Dimensions.font20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFFEDC855),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                "Waktu Saat ini",
-                                style: GoogleFonts.getFont(
-                                  "Poppins",
-                                  fontSize: Dimensions.font14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF035A2F),
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Waktu Saat ini",
+                                    style: GoogleFonts.getFont(
+                                      "Poppins",
+                                      fontSize: Dimensions.font14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF035A2F),
+                                    ),
+                                  ),
+                                  StreamBuilder(
+                                    stream: Stream.periodic(const Duration(seconds: 1)),
+                                    builder: (context, snapshot) {
+                                      return Text(
+                                        DateFormat('HH:mm:ss').format(DateTime.now()),
+                                        style: GoogleFonts.getFont(
+                                          "Poppins",
+                                          fontSize: Dimensions.font20,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFFEDC855),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: Dimensions.width10 / 2,
-                              right: Dimensions.width10 / 2,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "17:45",
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    fontSize: Dimensions.font24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFFEDC855),
-                                  ),
-                                ),
-                                Text(
-                                  "Ashar",
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    fontSize: Dimensions.font24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFFEDC855),
-                                  ),
-                                ),
-                                Text(
-                                  waktuHariIni,
-                                  style: GoogleFonts.getFont(
-                                    "Poppins",
-                                    fontSize: Dimensions.font24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFFEDC855),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
                         ],
                       ),
                     )
@@ -298,12 +308,12 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _logicWelcome() {
     String dataJam = DateFormat("HH:mm").format(DateTime.now());
-    if (dataJam == '18:10' &&
-        dataJam == '19:00' &&
-        dataJam == '20:00' &&
-        dataJam == '21:00' &&
-        dataJam == '22:00' &&
-        dataJam == '23:00' &&
+    if (dataJam == '18:10' ||
+        dataJam == '19:20' ||
+        dataJam == '20:00' ||
+        dataJam == '21:00' ||
+        dataJam == '22:00' ||
+        dataJam == '23:00' ||
         dataJam == '00:00') {
       return Text(
         "Selamat Berbuka!",
