@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nuri_app/controller/sholat_controller.dart';
 import 'package:nuri_app/utils/dimensions.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -11,16 +15,33 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  // final SholatController sholatController = Get.put(SholatController());
+  final String apiUrl = 'https://api.myquran.com/v1/sholat/jadwal/1301/2023/03/27';
+
+  Future<void> data() async {
+    var response = await http.get(Uri.parse(apiUrl));
+    Map<String, dynamic> data = new Map<String, dynamic>.from(jsonDecode(response.body)['data']);
+    print(data['daerah']);
+  }
+
   double _height = Dimensions.pageViewContainer;
   String hariIni = DateFormat.yMMMMd('id').format(DateTime.now());
   String waktuHariIni = DateFormat("HH:mm").format(DateTime.now());
   String timerReal = DateFormat('HH:mm:ss').format(DateTime.now());
 
+  // Future<void> _pullRefresh() async {
+  //   sholatController.readJadwal();
+  // }
+
+   var response = await http.get(Uri.parse(apiUrl));
+    Map<String, dynamic> data = new Map<String, dynamic>.from(jsonDecode(response.body)['data']);
+    print(data['daerah']);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.only(
               left: Dimensions.width16,
@@ -29,6 +50,7 @@ class _DashboardPageState extends State<DashboardPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // User
                 Container(
                   margin: EdgeInsets.only(
                     top: Dimensions.height20,
@@ -121,7 +143,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             ],
                           ),
                           Text(
-                            "Jagal lidahmu sebagaimana kamu merawat emas dan perak.",
+                            "Jaga lidahmu sebagaimana kamu merawat emas dan perak.",
                             style: GoogleFonts.getFont(
                               'Poppins',
                               fontSize: Dimensions.font14,
@@ -148,7 +170,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     top: Dimensions.height20,
                   ),
                   child: Text(
-                    "Jadwal Sholat",
+                    "DKI Jakarta",
                     style: GoogleFonts.getFont(
                       'Poppins',
                       fontSize: Dimensions.font14,
@@ -298,6 +320,268 @@ class _DashboardPageState extends State<DashboardPage> {
                     )
                   ],
                 ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: Dimensions.height20,
+                  ),
+                  child: Text(
+                    "Jadwal Sholat",
+                    style: GoogleFonts.getFont(
+                      'Poppins',
+                      fontSize: Dimensions.font14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 380,
+                  height: 480,
+                  child: GridView.count(
+                    physics: NeverScrollableScrollPhysics(),
+                    // shrinkWrap: true,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 3.5 / 4,
+                    crossAxisCount: 2,
+                    children: [
+                      // Subuh
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: Dimensions.height15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color(0xFF035A2F),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xFF035A2F).withOpacity(0.2),
+                              spreadRadius: 3,
+                              blurRadius: 6,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: Dimensions.height15,
+                            left: Dimensions.width16,
+                            right: Dimensions.width16,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "05:00 AM",
+                                style: GoogleFonts.getFont(
+                                  'Poppins',
+                                  fontSize: Dimensions.font20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                "Waktu Sholat Subuh",
+                                style: GoogleFonts.getFont(
+                                  'Poppins',
+                                  fontSize: Dimensions.font12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Image.asset(
+                                "assets/image/cloudy_night.png",
+                                width: Dimensions.width10 * 15,
+                                height: Dimensions.height10 * 12,
+                                alignment: Alignment.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Dzuhur
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: Dimensions.height15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 3,
+                              blurRadius: 6,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: Dimensions.height15,
+                            left: Dimensions.width16,
+                            right: Dimensions.width16,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "12:00 PM",
+                                style: GoogleFonts.getFont(
+                                  'Poppins',
+                                  fontSize: Dimensions.font20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF035A2f),
+                                ),
+                              ),
+                              Text(
+                                "Waktu Sholat Dzuhur",
+                                style: GoogleFonts.getFont(
+                                  'Poppins',
+                                  fontSize: Dimensions.font12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFF035A2f),
+                                ),
+                              ),
+                              Image.asset(
+                                "assets/image/day_cloud.png",
+                                width: Dimensions.width10 * 15,
+                                height: Dimensions.height10 * 12,
+                                alignment: Alignment.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Ashar
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: Dimensions.height15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 3,
+                              blurRadius: 6,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: Dimensions.height15,
+                            left: Dimensions.width16,
+                            right: Dimensions.width16,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "15:00 PM",
+                                style: GoogleFonts.getFont(
+                                  'Poppins',
+                                  fontSize: Dimensions.font20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF035A2f),
+                                ),
+                              ),
+                              Text(
+                                "Waktu Sholat Ashar",
+                                style: GoogleFonts.getFont(
+                                  'Poppins',
+                                  fontSize: Dimensions.font12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFF035A2f),
+                                ),
+                              ),
+                              Image.asset(
+                                "assets/image/day_cloud.png",
+                                width: Dimensions.width10 * 15,
+                                height: Dimensions.height10 * 12,
+                                alignment: Alignment.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Isya
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: Dimensions.height15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color(0xFF035A2F),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xFF035A2F).withOpacity(0.2),
+                              spreadRadius: 3,
+                              blurRadius: 6,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: Dimensions.height15,
+                            left: Dimensions.width16,
+                            right: Dimensions.width16,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "18:00 AM",
+                                style: GoogleFonts.getFont(
+                                  'Poppins',
+                                  fontSize: Dimensions.font20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                "Waktu Sholat Isya",
+                                style: GoogleFonts.getFont(
+                                  'Poppins',
+                                  fontSize: Dimensions.font12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Image.asset(
+                                "assets/image/cloudy_night.png",
+                                width: Dimensions.width10 * 15,
+                                height: Dimensions.height10 * 12,
+                                alignment: Alignment.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  data()
+                )
+                // FutureBuilder(
+                //     future: fetchUsers(),
+                //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+                //       if (snapshot.hasData) {
+                //         return ListView.builder(
+                //           itemCount: snapshot.data.length,
+                //           itemBuilder: (context, index) {
+                //             return Container(
+                //               child: Text(snapshot.data[index]['daerah']),
+                //             );
+                //           },
+                //         );
+                //       } else {
+                //         return Center(child: CircularProgressIndicator());
+                //       }
+                //     })
               ],
             ),
           ),
