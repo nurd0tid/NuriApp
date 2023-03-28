@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nuri_app/controller/sholat_controller.dart';
 import 'package:nuri_app/screens/quran/quran.dart';
 import 'package:nuri_app/utils/dimensions.dart';
 import 'package:intl/intl.dart';
@@ -14,16 +12,10 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  final SholatController sholatController = Get.put(SholatController());
-
   double _height = Dimensions.pageViewContainer;
   String hariIni = DateFormat.yMMMMd('id').format(DateTime.now());
   String waktuHariIni = DateFormat("HH:mm").format(DateTime.now());
   String timerReal = DateFormat('HH:mm:ss').format(DateTime.now());
-
-  Future<void> _pullRefresh() async {
-    sholatController.readJadwal();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -550,19 +542,6 @@ class _DashboardPageState extends State<DashboardPage> {
                     ],
                   ),
                 ),
-                // Tester Show Data
-                ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: sholatController.dataJadwal.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: Text(
-                        index.toString()
-                      ),
-                    );
-                  },
-                )
               ],
             ),
           ),
