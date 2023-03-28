@@ -2,8 +2,9 @@
     package="com.example.nuri_app">
      <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="nuri_app"
+        android:label="NuriApp"
         android:name="${applicationName}"
+         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

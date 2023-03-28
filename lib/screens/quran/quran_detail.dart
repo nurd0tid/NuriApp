@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,14 +8,33 @@ import 'package:nuri_app/utils/dimensions.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class QuranDetailPage extends StatelessWidget {
+class QuranDetailPage extends StatefulWidget {
   final int id;
   final String name;
   const QuranDetailPage({super.key, required this.id, required this.name});
 
   @override
+  State<QuranDetailPage> createState() => _QuranDetailPageState();
+}
+
+class _QuranDetailPageState extends State<QuranDetailPage> {
+  final audioPlayer = AudioPlayer();
+  bool isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    audioPlayer.onPlayerStateChanged.listen((state) {
+      setState(() {
+        isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final String apiUrl = "https://api.quran.gading.dev/surah/$id";
+    final String apiUrl = "https://api.quran.gading.dev/surah/${widget.id}";
 
     Future<List<dynamic>> _fecthDataUsers() async {
       var result = await http.get(Uri.parse(apiUrl));
@@ -34,7 +54,7 @@ class QuranDetailPage extends StatelessWidget {
             ),
           ),
           title: Text(
-            name,
+            widget.name,
             style: GoogleFonts.getFont('Poppins',
                 fontWeight: FontWeight.w600, fontSize: Dimensions.font16, color: Color(0xFF035A2F)),
           ),
@@ -59,17 +79,12 @@ class QuranDetailPage extends StatelessWidget {
                         height: Dimensions.height10 * 20,
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(Dimensions.radius15),
-                            color: Color(0xFF035A2F)
-                          ),
+                              borderRadius: BorderRadius.circular(Dimensions.radius15), color: Color(0xFF035A2F)),
                         ),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(
-                        left: Dimensions.width16,
-                        right: Dimensions.width16
-                      ),
+                      margin: EdgeInsets.only(left: Dimensions.width16, right: Dimensions.width16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -77,22 +92,19 @@ class QuranDetailPage extends StatelessWidget {
                             margin: EdgeInsets.only(
                               top: Dimensions.height20,
                             ),
-                            child: Image.asset(
-                              "assets/image/reading_quran.png",
-                              width: Dimensions.width10 * 18
-                            ),
+                            child: Image.asset("assets/image/reading_quran.png", width: Dimensions.width10 * 18),
                           ),
                           Container(
                             width: Dimensions.width10 * 18,
                             child: Text(
-                                "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ",
-                                style: GoogleFonts.getFont(
-                                  'Poppins',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: Dimensions.font20,
-                                  color: Colors.white,
-                                ),
+                              "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ",
+                              style: GoogleFonts.getFont(
+                                'Poppins',
+                                fontWeight: FontWeight.w500,
+                                fontSize: Dimensions.font20,
+                                color: Colors.white,
                               ),
+                            ),
                           ),
                         ],
                       ),
@@ -143,12 +155,21 @@ class QuranDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                         Container(
-                                          margin: EdgeInsets.only(right: Dimensions.width16),
-                                          child: Icon(
-                                            IconlyLight.play,
-                                            color: Color(0xFF035A2F),
-                                            size: Dimensions.iconSize16 * 2,
-                                          ),
+                                            margin: EdgeInsets.only(right: Dimensions.width16),
+                                            child: IconButton(
+                                              onPressed: () async {
+                                                if (isPlaying) {
+                                                  await audioPlayer.pause();
+                                                } else {
+                                                  String url = snapshot.data[index]['audio']['secondary'][0];
+                                                  await audioPlayer.play(UrlSource(url));
+                                                }
+                                              },
+                                              icon: Icon(
+                                                isPlaying  ? Icons.pause  : IconlyLight.play,
+                                              ),
+                                              iconSize: 24,
+                                            ),
                                         ),
                                       ],
                                     ),
