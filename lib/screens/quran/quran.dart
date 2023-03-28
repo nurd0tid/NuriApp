@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nuri_app/controller/quran_controller.dart';
 import 'package:nuri_app/screens/home/dashboard.dart';
 import 'package:nuri_app/utils/dimensions.dart';
 import 'package:http/http.dart' as http;
@@ -20,12 +18,6 @@ class _QuranPageState extends State<QuranPage> {
   Future<List<dynamic>> _fecthDataUsers() async {
     var result = await http.get(Uri.parse(apiUrl));
     return json.decode(result.body)['data'];
-  }
-
-  final QuranController quranController = Get.put(QuranController());
-
-  Future<void> _pullRefresh() async {
-    quranController.readJadwal();
   }
 
   @override
@@ -193,6 +185,13 @@ class _QuranPageState extends State<QuranPage> {
                                               ),
                                               Text(
                                                 snapshot.data[index]['numberOfVerses'].toString(),
+                                                style: GoogleFonts.getFont('Poppins',
+                                                    fontSize: Dimensions.font12,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color(0xFF8789A3)),
+                                              ),
+                                              Text(
+                                                " Ayat",
                                                 style: GoogleFonts.getFont('Poppins',
                                                     fontSize: Dimensions.font12,
                                                     fontWeight: FontWeight.w500,
