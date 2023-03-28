@@ -46,10 +46,60 @@ class QuranDetailPage extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Image.asset(
-                  "assets/image/card1.png",
-                  width: Dimensions.width10 * 38,
+                Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: Dimensions.width16,
+                        right: Dimensions.width16,
+                        top: Dimensions.height20,
+                        bottom: Dimensions.height20,
+                      ),
+                      child: SizedBox(
+                        height: Dimensions.height10 * 20,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.radius15),
+                            color: Color(0xFF035A2F)
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: Dimensions.width16,
+                        right: Dimensions.width16
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(
+                              top: Dimensions.height20,
+                            ),
+                            child: Image.asset(
+                              "assets/image/reading_quran.png",
+                              width: Dimensions.width10 * 18
+                            ),
+                          ),
+                          Container(
+                            width: Dimensions.width10 * 18,
+                            child: Text(
+                                "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ",
+                                style: GoogleFonts.getFont(
+                                  'Poppins',
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: Dimensions.font20,
+                                  color: Colors.white,
+                                ),
+                              ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
+                // Data
                 FutureBuilder(
                     future: _fecthDataUsers(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
