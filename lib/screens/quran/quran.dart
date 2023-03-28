@@ -125,10 +125,12 @@ class _QuranPageState extends State<QuranPage> {
                             return InkWell(
                               onTap: () {
                                 var id = snapshot.data[index]['number'];
+                                var name = snapshot.data[index]['name']['transliteration']['id'];
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                         builder: (context) => QuranDetailPage(
                                               id: id,
+                                              name: name,
                                             )),
                                     (route) => false);
                               },

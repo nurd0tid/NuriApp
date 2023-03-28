@@ -9,7 +9,8 @@ import 'dart:convert';
 
 class QuranDetailPage extends StatelessWidget {
   final int id;
-  const QuranDetailPage({super.key, required this.id});
+  final String name;
+  const QuranDetailPage({super.key, required this.id, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class QuranDetailPage extends StatelessWidget {
       var result = await http.get(Uri.parse(apiUrl));
       return json.decode(result.body)['data']['verses'];
     }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -32,7 +34,7 @@ class QuranDetailPage extends StatelessWidget {
             ),
           ),
           title: Text(
-            "Al-Fatiha",
+            name,
             style: GoogleFonts.getFont('Poppins',
                 fontWeight: FontWeight.w600, fontSize: Dimensions.font16, color: Color(0xFF035A2F)),
           ),
