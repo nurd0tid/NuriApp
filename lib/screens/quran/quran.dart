@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nuri_app/screens/home/dashboard.dart';
+import 'package:nuri_app/screens/quran/quran_detail.dart';
 import 'package:nuri_app/utils/dimensions.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -123,7 +124,13 @@ class _QuranPageState extends State<QuranPage> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                print(snapshot.data[index]['number']);
+                                var id = snapshot.data[index]['number'];
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => QuranDetailPage(
+                                              id: id,
+                                            )),
+                                    (route) => false);
                               },
                               onHover: (value) {},
                               child: Container(

@@ -2,33 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nuri_app/screens/home/dashboard.dart';
+import 'package:nuri_app/screens/quran/quran.dart';
 import 'package:nuri_app/utils/dimensions.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class QuranDetailPage extends StatefulWidget {
-  const QuranDetailPage({super.key});
-
-  @override
-  State<QuranDetailPage> createState() => _QuranDetailPageState();
-}
-
-class _QuranDetailPageState extends State<QuranDetailPage> {
-  final String apiUrl = "https://api.quran.gading.dev/surah/1";
-  Future<List<dynamic>> _fecthDataUsers() async {
-    var result = await http.get(Uri.parse(apiUrl));
-    return json.decode(result.body)['data']['verses'];
-  }
+class QuranDetailPage extends StatelessWidget {
+  final int id;
+  const QuranDetailPage({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
+    final String apiUrl = "https://api.quran.gading.dev/surah/$id";
+
+    Future<List<dynamic>> _fecthDataUsers() async {
+      var result = await http.get(Uri.parse(apiUrl));
+      return json.decode(result.body)['data']['verses'];
+    }
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
           leading: GestureDetector(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (_) => DashboardPage())),
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (_) => QuranPage())),
             child: Icon(
               IconlyLight.arrowLeft,
               color: Color(0xFF035A2f),
@@ -112,16 +109,15 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                                       ),
                                     ),
                                     margin: EdgeInsets.only(
-                                      left: Dimensions.width16,
-                                      right: Dimensions.width16,
-                                      top: Dimensions.height10,
-                                      bottom: Dimensions.height10
-                                    ),
+                                        left: Dimensions.width16,
+                                        right: Dimensions.width16,
+                                        top: Dimensions.height10,
+                                        bottom: Dimensions.height10),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         Text(
-                                         snapshot.data[index]['text']['arab'],
+                                          snapshot.data[index]['text']['arab'],
                                           style: GoogleFonts.getFont(
                                             'Poppins',
                                             fontWeight: FontWeight.w500,
@@ -146,7 +142,7 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                                       ],
                                     ),
                                   ),
-                               ],
+                                ],
                               ),
                             );
                           },
