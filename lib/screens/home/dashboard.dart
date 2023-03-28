@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nuri_app/controller/sholat_controller.dart';
+import 'package:nuri_app/screens/quran/quran.dart';
 import 'package:nuri_app/utils/dimensions.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -15,27 +14,16 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  // final SholatController sholatController = Get.put(SholatController());
-  final String apiUrl = 'https://api.myquran.com/v1/sholat/jadwal/1301/2023/03/27';
-
-  Future<void> data() async {
-    var response = await http.get(Uri.parse(apiUrl));
-    Map<String, dynamic> data = new Map<String, dynamic>.from(jsonDecode(response.body)['data']);
-    print(data['daerah']);
-  }
+  final SholatController sholatController = Get.put(SholatController());
 
   double _height = Dimensions.pageViewContainer;
   String hariIni = DateFormat.yMMMMd('id').format(DateTime.now());
   String waktuHariIni = DateFormat("HH:mm").format(DateTime.now());
   String timerReal = DateFormat('HH:mm:ss').format(DateTime.now());
 
-  // Future<void> _pullRefresh() async {
-  //   sholatController.readJadwal();
-  // }
-
-   var response = await http.get(Uri.parse(apiUrl));
-    Map<String, dynamic> data = new Map<String, dynamic>.from(jsonDecode(response.body)['data']);
-    print(data['daerah']);
+  Future<void> _pullRefresh() async {
+    sholatController.readJadwal();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +108,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                 height: Dimensions.height10 * 15,
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  print("Aku Mau Baca Qur'an");
-                                },
+                                onTap: () =>
+                                    Navigator.of(context).push(new MaterialPageRoute(builder: (_) => QuranPage())),
                                 child: Container(
                                   margin: EdgeInsets.only(bottom: Dimensions.height20 * 2),
                                   padding: EdgeInsets.all(Dimensions.width10 / 1.2),
@@ -563,25 +550,19 @@ class _DashboardPageState extends State<DashboardPage> {
                     ],
                   ),
                 ),
-                Text(
-                  data()
+                // Tester Show Data
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: sholatController.dataJadwal.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      child: Text(
+                        index.toString()
+                      ),
+                    );
+                  },
                 )
-                // FutureBuilder(
-                //     future: fetchUsers(),
-                //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                //       if (snapshot.hasData) {
-                //         return ListView.builder(
-                //           itemCount: snapshot.data.length,
-                //           itemBuilder: (context, index) {
-                //             return Container(
-                //               child: Text(snapshot.data[index]['daerah']),
-                //             );
-                //           },
-                //         );
-                //       } else {
-                //         return Center(child: CircularProgressIndicator());
-                //       }
-                //     })
               ],
             ),
           ),

@@ -1,49 +1,76 @@
 class DataJadwal {
-  bool? status;
-  Data? data;
+  String? status;
+  Request? request;
+  List<Data>? data;
 
-  DataJadwal({this.status, this.data});
+  DataJadwal({this.status, this.request, this.data});
 
   DataJadwal.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    request = json['request'] != null ? new Request.fromJson(json['request']) : null;
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
+    if (this.request != null) {
+      data['request'] = this.request!.toJson();
+    }
     if (this.data != null) {
-      data['data'] = this.data!.toJson();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
+class Request {
+  String? lat;
+  String? long;
+  String? tahun;
+  String? bulan;
+  String? tanggal;
+
+  Request({this.lat, this.long, this.tahun, this.bulan, this.tanggal});
+
+  Request.fromJson(Map<String, dynamic> json) {
+    lat = json['lat'];
+    long = json['long'];
+    tahun = json['tahun'];
+    bulan = json['bulan'];
+    tanggal = json['tanggal'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lat'] = this.lat;
+    data['long'] = this.long;
+    data['tahun'] = this.tahun;
+    data['bulan'] = this.bulan;
+    data['tanggal'] = this.tanggal;
+    return data;
+  }
+}
+
 class Data {
-  String? id;
-  String? lokasi;
-  String? daerah;
-  Koordinat? koordinat;
+  String? tanggal;
   Jadwal? jadwal;
 
-  Data({this.id, this.lokasi, this.daerah, this.koordinat, this.jadwal});
+  Data({this.tanggal, this.jadwal});
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    lokasi = json['lokasi'];
-    daerah = json['daerah'];
-    koordinat = json['koordinat'] != null ? new Koordinat.fromJson(json['koordinat']) : null;
+    tanggal = json['tanggal'];
     jadwal = json['jadwal'] != null ? new Jadwal.fromJson(json['jadwal']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['lokasi'] = this.lokasi;
-    data['daerah'] = this.daerah;
-    if (this.koordinat != null) {
-      data['koordinat'] = this.koordinat!.toJson();
-    }
+    data['tanggal'] = this.tanggal;
     if (this.jadwal != null) {
       data['jadwal'] = this.jadwal!.toJson();
     }
@@ -51,80 +78,51 @@ class Data {
   }
 }
 
-class Koordinat {
-  double? lat;
-  double? lon;
-  String? lintang;
-  String? bujur;
-
-  Koordinat({this.lat, this.lon, this.lintang, this.bujur});
-
-  Koordinat.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    lon = json['lon'];
-    lintang = json['lintang'];
-    bujur = json['bujur'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lon'] = this.lon;
-    data['lintang'] = this.lintang;
-    data['bujur'] = this.bujur;
-    return data;
-  }
-}
-
 class Jadwal {
-  String? tanggal;
-  String? imsak;
   String? subuh;
   String? terbit;
-  String? dhuha;
-  String? dzuhur;
+  String? duhur;
   String? ashar;
+  String? terbenam;
   String? maghrib;
   String? isya;
-  String? date;
+  String? imsak;
+  String? tengahMalam;
 
   Jadwal(
-      {this.tanggal,
-      this.imsak,
-      this.subuh,
+      {this.subuh,
       this.terbit,
-      this.dhuha,
-      this.dzuhur,
+      this.duhur,
       this.ashar,
+      this.terbenam,
       this.maghrib,
       this.isya,
-      this.date});
+      this.imsak,
+      this.tengahMalam});
 
   Jadwal.fromJson(Map<String, dynamic> json) {
-    tanggal = json['tanggal'];
-    imsak = json['imsak'];
-    subuh = json['subuh'];
-    terbit = json['terbit'];
-    dhuha = json['dhuha'];
-    dzuhur = json['dzuhur'];
-    ashar = json['ashar'];
-    maghrib = json['maghrib'];
-    isya = json['isya'];
-    date = json['date'];
+    subuh = json['Subuh'];
+    terbit = json['Terbit'];
+    duhur = json['Duhur'];
+    ashar = json['Ashar'];
+    terbenam = json['Terbenam'];
+    maghrib = json['Maghrib'];
+    isya = json['Isya'];
+    imsak = json['Imsak'];
+    tengahMalam = json['TengahMalam'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['tanggal'] = this.tanggal;
-    data['imsak'] = this.imsak;
-    data['subuh'] = this.subuh;
-    data['terbit'] = this.terbit;
-    data['dhuha'] = this.dhuha;
-    data['dzuhur'] = this.dzuhur;
-    data['ashar'] = this.ashar;
-    data['maghrib'] = this.maghrib;
-    data['isya'] = this.isya;
-    data['date'] = this.date;
+    data['Subuh'] = this.subuh;
+    data['Terbit'] = this.terbit;
+    data['Duhur'] = this.duhur;
+    data['Ashar'] = this.ashar;
+    data['Terbenam'] = this.terbenam;
+    data['Maghrib'] = this.maghrib;
+    data['Isya'] = this.isya;
+    data['Imsak'] = this.imsak;
+    data['TengahMalam'] = this.tengahMalam;
     return data;
   }
 }

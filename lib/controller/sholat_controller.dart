@@ -18,19 +18,19 @@ class SholatController extends GetxController {
   }
 
   void readJadwal() async {
-    RequestJadwal request = RequestJadwal(url: '/sholat/kota/semua');
+    RequestJadwal request = RequestJadwal(url: '?lat=-6.1953184&long=106.792654&tahun=2020&bulan=2&tanggal=2');
     request.get().then((response) {
       if (response.statusCode == 200) {
-        print(response.body);
-        // List jsonResponse = jsonDecode(response.body);
-        // dataJadwal.value = jsonResponse.map((e) => DataJadwal.fromJson(e)).toList();
-        // print(dataJadwal.map((e) => e.data!.daerah));
+        // print(response.body);
+        List jsonResponse = jsonDecode(response.body)['data'];
+        dataJadwal.value = jsonResponse.map((e) => DataJadwal.fromJson(e)).toList();
+        // print(dataJadwal.map((e) => e.data![0].tanggal));
         // return dataJadwal;
-        var dataJadwal = jsonDecode(response.body)['data'];
-        // Iterable it = jsonDecode(response.body);
+        // var dataJadwal = jsonDecode(response.body);
+        // Iterable it = jsonDecode(response.body)['data'];
         // List<DataJadwal> dataJadwal = it.map((e) => DataJadwal.fromJson(e)).toList();
         // return dataJadwal;
-        print(dataJadwal);
+        // print(dataJadwal);
       } else {
         print('Backend error');
       }

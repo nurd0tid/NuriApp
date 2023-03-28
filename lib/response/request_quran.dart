@@ -1,12 +1,12 @@
 import 'package:http/http.dart' as http;
 
-const baseUrl = 'https://jadwalsholat.idn.sch.id/';
+const baseUrl = 'https://api.quran.gading.dev/';
 
-class RequestJadwal {
+class RequestQuran {
   final String url;
   final dynamic body;
 
-  RequestJadwal({required this.url, this.body});
+  RequestQuran({required this.url, this.body});
 
   Future<http.Response> post() {
     return http.post(Uri.parse(baseUrl + url), body: body).timeout(Duration(minutes: 2));
