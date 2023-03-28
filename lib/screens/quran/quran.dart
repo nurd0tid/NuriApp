@@ -129,84 +129,88 @@ class _QuranPageState extends State<QuranPage> {
                           shrinkWrap: true,
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(width: 1.0, color: Color(0xFFBBC4CE)),
-                                ),
-                              ),
+                            return InkWell(
+                              onTap: () {
+                                print(snapshot.data[index]['number']);
+                              },
+                              onHover: (value) {},
                               child: Container(
-                                margin: EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                            'assets/image/iconNumber.png'
-                                          ),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(Dimensions.width15),
-                                        child: Text(
-                                          '${index + 1}',
-                                          style: GoogleFonts.getFont(
-                                            'Poppins',
-                                            fontSize: Dimensions.font14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Color(0xFF035A2F),
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(width: 1.0, color: Color(0xFFBBC4CE)),
+                                  ),
+                                ),
+                                child: Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage('assets/image/iconNumber.png'),
+                                            fit: BoxFit.fill,
                                           ),
                                         ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(Dimensions.width15),
+                                          child: Text(
+                                            '${index + 1}',
+                                            style: GoogleFonts.getFont(
+                                              'Poppins',
+                                              fontSize: Dimensions.font14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0xFF035A2F),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          snapshot.data[index]['name']['transliteration']['id'],
-                                          style: GoogleFonts.getFont(
-                                            'Poppins',
+                                      Column(
+                                        children: [
+                                          Text(
+                                            snapshot.data[index]['name']['transliteration']['id'],
+                                            style: GoogleFonts.getFont(
+                                              'Poppins',
+                                              fontSize: Dimensions.font16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                snapshot.data[index]['revelation']['id'],
+                                                style: GoogleFonts.getFont('Poppins',
+                                                    fontSize: Dimensions.font12,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color(0xFF8789A3)),
+                                              ),
+                                              Text(
+                                                " - ",
+                                                style: GoogleFonts.getFont('Poppins',
+                                                    fontSize: Dimensions.font12,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color(0xFF8789A3)),
+                                              ),
+                                              Text(
+                                                snapshot.data[index]['numberOfVerses'].toString(),
+                                                style: GoogleFonts.getFont('Poppins',
+                                                    fontSize: Dimensions.font12,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color(0xFF8789A3)),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Text(
+                                        snapshot.data[index]['name']['short'],
+                                        style: GoogleFonts.getFont('Poppins',
                                             fontSize: Dimensions.font16,
                                             fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              snapshot.data[index]['revelation']['id'],
-                                              style: GoogleFonts.getFont('Poppins',
-                                                  fontSize: Dimensions.font12,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Color(0xFF8789A3)),
-                                            ),
-                                            Text(
-                                              " - ",
-                                              style: GoogleFonts.getFont('Poppins',
-                                                  fontSize: Dimensions.font12,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Color(0xFF8789A3)),
-                                            ),
-                                            Text(
-                                              snapshot.data[index]['numberOfVerses'].toString(),
-                                              style: GoogleFonts.getFont('Poppins',
-                                                  fontSize: Dimensions.font12,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Color(0xFF8789A3)),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      snapshot.data[index]['name']['short'],
-                                      style: GoogleFonts.getFont('Poppins',
-                                          fontSize: Dimensions.font16,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color(0xFF035A2F)),
-                                    ),
-                                  ],
+                                            color: Color(0xFF035A2F)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
