@@ -563,7 +563,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   return Center(
                     child: Container(
                       margin: EdgeInsets.only(
-                        top: Dimensions.height50 * 3,
+                        top: Dimensions.height30 * 12,
                       ),
                       child: CircularProgressIndicator(),
                     ),

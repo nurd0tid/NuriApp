@@ -78,13 +78,14 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                       child: SizedBox(
                         height: Dimensions.height10 * 20,
                         child: Container(
+                          width: Dimensions.width10 * 48,
+                          height: Dimensions.height10 * 15,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(Dimensions.radius15), color: Color(0xFF035A2F)),
                         ),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: Dimensions.width16, right: Dimensions.width16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
