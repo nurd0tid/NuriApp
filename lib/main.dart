@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nuri_app/home.dart';
 import 'package:nuri_app/screens/home/dashboard.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DashboardPage(),    
+      home: Home(),    
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nuri_app/home.dart';
 import 'package:nuri_app/screens/home/dashboard.dart';
 import 'package:nuri_app/screens/quran/quran_detail.dart';
 import 'package:nuri_app/utils/dimensions.dart';
@@ -29,7 +30,7 @@ class _QuranPageState extends State<QuranPage> {
           backgroundColor: Colors.white,
           elevation: 0,
           leading: GestureDetector(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (_) => DashboardPage())),
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (_) => Home())),
             child: Icon(
               IconlyLight.arrowLeft,
               color: Color(0xFF035A2f),

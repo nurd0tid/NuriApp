@@ -41,6 +41,8 @@ dependencies:
   http: any
   flutter_iconly: ^1.0.2
   audioplayers: ^3.0.1
+  curved_navigation_bar: ^1.0.3
+  lucide_icons: ^0.129.0
 
 dev_dependencies:
   flutter_test:

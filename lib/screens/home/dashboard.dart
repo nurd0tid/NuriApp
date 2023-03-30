@@ -25,7 +25,7 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     final String apiUrl =
-        "https://jadwalsholat.idn.sch.id/?lat=-6.1700888888888885&long=106.83105&tahun=2023&bulan=03&tanggal=30";
+        "https://jadwalsholat.idn.sch.id/?lat=-6.1700888888888885&long=106.83105&tahun=$tahun&bulan=$bulan&tanggal=$hari";
     Future<List<dynamic>> _fecthDataSholat() async {
       var result = await http.get(Uri.parse(apiUrl));
       return json.decode(result.body)['data'];
@@ -274,15 +274,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 color: Color(0xFF035A2F),
                                               ),
                                             ),
-                                            Text(
-                                              "Ashar",
-                                              style: GoogleFonts.getFont(
-                                                "Poppins",
-                                                fontSize: Dimensions.font20,
-                                                fontWeight: FontWeight.w600,
-                                                color: Color(0xFFEDC855),
-                                              ),
-                                            ),
+                                            _logicWaktu()
                                           ],
                                         ),
                                         Column(
@@ -585,15 +577,74 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
+  Widget _logicWaktu() {
+    var dataWaktu = DateTime.now().hour;
+    if (dataWaktu >= 19 || dataWaktu <= 4) {
+      return Text(
+        "Isya",
+        style: GoogleFonts.getFont(
+            "Poppins",
+            fontSize: Dimensions.font20,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFEDC855),
+        ),
+      );
+    }else if(dataWaktu >= 17 || dataWaktu <= 19 ){
+      return Text(
+        "Maghrib",
+        style: GoogleFonts.getFont(
+            "Poppins",
+            fontSize: Dimensions.font20,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFEDC855),
+         ),
+      );
+    }else if(dataWaktu >= 15 || dataWaktu <= 17) {
+      return Text(
+        "Ashar",
+        style: GoogleFonts.getFont(
+            "Poppins",
+            fontSize: Dimensions.font20,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFEDC855),
+         ),
+      );
+    }else if(dataWaktu >= 11 || dataWaktu <= 15) {
+      return Text(
+        "Dzuhur",
+        style: GoogleFonts.getFont(
+            "Poppins",
+            fontSize: Dimensions.font20,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFEDC855),
+         ),
+      );
+    }else if(dataWaktu >= 4 || dataWaktu <= 6){
+      return Text(
+        "Subuh",
+        style: GoogleFonts.getFont(
+            "Poppins",
+            fontSize: Dimensions.font20,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFEDC855),
+         ),
+      );
+    }else{
+      return Text(
+        "-",
+        style: GoogleFonts.getFont(
+          "Poppins",
+          fontSize: Dimensions.font20,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFFEDC855),
+        ),
+      );
+    }
+  }
+
   Widget _logicWelcome() {
-    String dataJam = DateFormat("HH:mm").format(DateTime.now());
-    if (dataJam == '18:10' ||
-        dataJam == '19:20' ||
-        dataJam == '20:00' ||
-        dataJam == '21:00' ||
-        dataJam == '22:00' ||
-        dataJam == '23:00' ||
-        dataJam == '00:00') {
+    var dataJam = DateTime.now().hour;
+    if (dataJam >= 18 || dataJam <= 24) {
       return Text(
         "Selamat Berbuka!",
         style: GoogleFonts.getFont(
@@ -602,7 +653,7 @@ class _DashboardPageState extends State<DashboardPage> {
           fontWeight: FontWeight.w500,
         ),
       );
-    } else if (dataJam == '01:00' && dataJam == '02:00' && dataJam == '03:00' && dataJam == '04:00') {
+    } else if (dataJam >= 3 || dataJam <= 4) {
       return Text(
         "Selamat Sahur!",
         style: GoogleFonts.getFont(
@@ -611,9 +662,18 @@ class _DashboardPageState extends State<DashboardPage> {
           fontWeight: FontWeight.w500,
         ),
       );
-    } else {
+    } else if (dataJam >= 4 || dataJam <= 18) {
       return Text(
         "Selamat Berpuasa!",
+        style: GoogleFonts.getFont(
+          'Poppins',
+          fontSize: Dimensions.font14,
+          fontWeight: FontWeight.w500,
+        ),
+      );
+    } else {
+      return Text(
+        "Selamat Malam",
         style: GoogleFonts.getFont(
           'Poppins',
           fontSize: Dimensions.font14,
