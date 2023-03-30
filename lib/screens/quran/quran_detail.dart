@@ -91,10 +91,14 @@ class _QuranDetailPageState extends State<QuranDetailPage> {
                           Container(
                             margin: EdgeInsets.only(
                               top: Dimensions.height20,
+                              left: Dimensions.width16,
                             ),
                             child: Image.asset("assets/image/reading_quran.png", width: Dimensions.width10 * 18),
                           ),
                           Container(
+                            margin: EdgeInsets.only(
+                              right: Dimensions.width16,
+                            ),
                             width: Dimensions.width10 * 18,
                             child: Text(
                               "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ",

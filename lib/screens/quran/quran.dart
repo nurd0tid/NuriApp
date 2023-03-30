@@ -61,7 +61,7 @@ class _QuranPageState extends State<QuranPage> {
                             top: Dimensions.height10,
                             bottom: Dimensions.height20,
                           ),
-                          width: Dimensions.width10 * 38,
+                          width: Dimensions.width10 * 48,
                           height: Dimensions.height10 * 15,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(Dimensions.radius20 / 2),
